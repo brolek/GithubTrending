@@ -22,19 +22,6 @@ fun AppNavigation() {
         ) {
             ProjectsDestination(navController)
         }
-
-//        composable(
-//            route = NavigationKey.Route.PROJECT_DETAILS,
-//            arguments = listOf(navArgument(name = PROJECT_ID) {
-//                type = NavType.StringType
-//            })
-//        ) { backStackEntry ->
-//            val userId = requireNotNull(backStackEntry.arguments?.getString(PROJECT_ID)) { "User id is required as an argument" }
-//            ReposScreenDestination(
-//                UserId = userId,
-//                navController = navController
-//            )
-//        }
     }
 }
 
