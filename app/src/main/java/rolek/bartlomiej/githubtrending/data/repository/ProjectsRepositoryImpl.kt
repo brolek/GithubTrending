@@ -15,11 +15,9 @@ class ProjectsRepositoryImpl @Inject constructor(
     private val dispatcher: CoroutineDispatcher = Dispatchers.IO
 ) :
     ProjectsRepository {
-    override suspend fun getTrendingRepositories(language: String) = kotlin.runCatching {
+    override suspend fun getTrendingRepositories(page: Int) = kotlin.runCatching {
         withContext(dispatcher) {
-            apiService.getTrendingRepositories(language).body<RepoListWrapper>().items
+            apiService.getTrendingRepositories(page).body<RepoListWrapper>().items
         }
     }
-
-
 }

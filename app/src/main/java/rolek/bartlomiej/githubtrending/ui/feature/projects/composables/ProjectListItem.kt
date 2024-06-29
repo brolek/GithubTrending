@@ -74,7 +74,9 @@ fun ProjectListItem(project: ProjectItem, onItemClick: (ProjectItem) -> Unit) {
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier.fillMaxWidth()
         ) {
-            AssistChip(onClick = { }, label = { Text(text = project.language) })
+            if (project.language != null) {
+                AssistChip(onClick = { }, label = { Text(text = project.language) })
+            }
             Spacer(modifier = Modifier.weight(1f))
             Icon(imageVector = Icons.Default.Star, contentDescription = null)
             Text(text = project.watchers.toString(), style = MaterialTheme.typography.titleMedium)

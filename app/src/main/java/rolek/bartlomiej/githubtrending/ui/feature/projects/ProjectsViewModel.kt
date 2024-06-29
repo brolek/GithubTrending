@@ -1,8 +1,9 @@
 package rolek.bartlomiej.githubtrending.ui.feature.projects
 
-import androidx.lifecycle.viewModelScope
+import android.nfc.tech.MifareUltralight.PAGE_SIZE
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.launch
 import rolek.bartlomiej.githubtrending.data.repository.ProjectsRepository
 import rolek.bartlomiej.githubtrending.ui.base.BaseViewModel
 import javax.inject.Inject
@@ -17,8 +18,10 @@ class ProjectsViewModel @Inject constructor(private val repository: ProjectsRepo
 
     override fun setInitialState(): ProjectsContract.State {
         return ProjectsContract.State(
-            projectsList = emptyList(),
-            isLoading = true,
+            projectsPager = Pager (PagingConfig(pageSize = PAGE_SIZE)) {
+            ProjectsPagingSource(repository)
+        }.flow,
+            isLoading = false,
             isError = false
         )
     }
@@ -32,22 +35,27 @@ class ProjectsViewModel @Inject constructor(private val repository: ProjectsRepo
             is ProjectsContract.Event.ProjectClicked -> {
                 setEffect { ProjectsContract.Effect.Navigation.ToDetails(event.project.node_id) }
             }
+            is ProjectsContract.Event.LoadMore -> {
+                getProjects()
+            }
         }
     }
 
     private fun getProjects() {
-        viewModelScope.launch {
-            setState { copy(isLoading = true, isError = false) }
-
-            repository.getTrendingRepositories("kotlin")
-                .onSuccess { projects ->
-                    setState { copy(projectsList = projects, isLoading = false) }
-                    setEffect { ProjectsContract.Effect.DataWasLoaded }
-                }
-                .onFailure {
-                    setState { copy(isError = true, isLoading = false) }
-                }
-        }
+//        viewModelScope.launch {
+//            setState { copy(isLoading = true, isError = false) }
+//
+//            repository.getTrendingRepositories(currentPage)
+//                .onSuccess { projects ->
+//                    setState { copy(isLoading = false) }
+//                    currentPage++
+//                    setEffect { ProjectsContract.Effect.DataWasLoaded }
+//                }
+//                .onFailure {
+//                    println(it.message)
+//                    setState { copy(isError = true, isLoading = false) }
+//                }
+//        }
     }
 
 

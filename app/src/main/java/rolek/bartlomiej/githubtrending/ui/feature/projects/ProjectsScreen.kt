@@ -13,6 +13,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.paging.compose.collectAsLazyPagingItems
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.onEach
@@ -73,11 +74,12 @@ fun ProjectsScreen(
             state.isLoading -> Progress()
             state.isError -> RequestError(onRetryButtonClick = { onEventSent(ProjectsContract.Event.Retry) })
             else -> ProjectsList(
-                projects = state.projectsList,
+                projects = state.projectsPager.collectAsLazyPagingItems(),
+                onRetry = { onEventSent(ProjectsContract.Event.Retry) },
                 modifier = Modifier.padding(
                     top = padding.calculateTopPadding(),
                     bottom = padding.calculateBottomPadding()
-                )
+                ),
             ) {
                 onEventSent(ProjectsContract.Event.ProjectClicked(it))
             }

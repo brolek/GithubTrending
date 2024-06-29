@@ -47,7 +47,7 @@ data class ProjectItem(
     val issues_url: String,
     val keys_url: String,
     val labels_url: String,
-    val language: String,
+    val language: String?,
     val languages_url: String,
     val merges_url: String,
     val milestones_url: String,
