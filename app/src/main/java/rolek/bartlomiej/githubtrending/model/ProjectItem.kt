@@ -1,7 +1,7 @@
 package rolek.bartlomiej.githubtrending.model
 
 @kotlinx.serialization.Serializable
-data class RepoItem(
+data class ProjectItem(
     val allow_forking: Boolean,
     val archive_url: String,
     val archived: Boolean,

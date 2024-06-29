@@ -1,4 +1,4 @@
-package rolek.bartlomiej.githubtrending.api.util
+package rolek.bartlomiej.githubtrending.data.api.util
 
 sealed class ApiResult<T>(val data: T? = null, val error: String? = null) {
     class Success<T>(data: T) : ApiResult<T>(data = data)

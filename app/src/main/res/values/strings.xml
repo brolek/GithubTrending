@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">GitHubTrending</string>
+    <string name="error_message">Error occurred</string>
+    <string name="no_internet">No internet connection</string>
+    <string name="header">Popular Projects</string>
+    <string name="retry">Retry</string>
 </resources>

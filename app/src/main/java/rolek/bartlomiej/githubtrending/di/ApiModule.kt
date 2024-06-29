@@ -14,12 +14,12 @@ import io.ktor.client.request.header
 import io.ktor.http.ContentType
 import io.ktor.http.HttpHeaders
 import io.ktor.serialization.kotlinx.json.json
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
 import kotlinx.serialization.json.Json
 import rolek.bartlomiej.githubtrending.BuildConfig
-import rolek.bartlomiej.githubtrending.api.ApiService
-import rolek.bartlomiej.githubtrending.api.ApiServiceImpl
+import rolek.bartlomiej.githubtrending.data.api.ApiService
+import rolek.bartlomiej.githubtrending.data.api.ApiServiceImpl
+import rolek.bartlomiej.githubtrending.data.repository.ProjectsRepository
+import rolek.bartlomiej.githubtrending.data.repository.ProjectsRepositoryImpl
 import rolek.bartlomiej.githubtrending.utils.Constants
 import javax.inject.Singleton
 
@@ -57,6 +57,9 @@ object ApiModule {
     @Provides
     fun provideApiService(httpClient: HttpClient): ApiService = ApiServiceImpl(httpClient)
 
+//    @Provides
+//    fun provideDispatcher(): CoroutineDispatcher = Dispatchers.Default
+
     @Provides
-    fun provideDispatcher(): CoroutineDispatcher = Dispatchers.Default
+    fun provideProjectsRepository(apiService: ApiService): ProjectsRepository = ProjectsRepositoryImpl(apiService)
 }
