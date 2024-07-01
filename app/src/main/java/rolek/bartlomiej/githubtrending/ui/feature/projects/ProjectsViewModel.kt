@@ -12,10 +12,6 @@ import javax.inject.Inject
 class ProjectsViewModel @Inject constructor(private val repository: ProjectsRepository) :
     BaseViewModel<ProjectsContract.Event, ProjectsContract.State, ProjectsContract.Effect>() {
 
-    init {
-        getProjects()
-    }
-
     override fun setInitialState(): ProjectsContract.State {
         return ProjectsContract.State(
             projectsPager = Pager (PagingConfig(pageSize = PAGE_SIZE)) {
@@ -33,7 +29,7 @@ class ProjectsViewModel @Inject constructor(private val repository: ProjectsRepo
             }
 
             is ProjectsContract.Event.ProjectClicked -> {
-                setEffect { ProjectsContract.Effect.Navigation.ToDetails(event.project.node_id) }
+                setEffect { ProjectsContract.Effect.Navigation.ToDetails(event.project) }
             }
             is ProjectsContract.Event.LoadMore -> {
                 getProjects()
@@ -57,6 +53,4 @@ class ProjectsViewModel @Inject constructor(private val repository: ProjectsRepo
 //                }
 //        }
     }
-
-
 }

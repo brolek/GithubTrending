@@ -17,7 +17,7 @@ fun ProjectsDestination(navController: NavController) {
         onEventSent = { event -> viewModel.setEvent(event) },
         onNavigationRequested = { navigationEffect ->
             if (navigationEffect is ProjectsContract.Effect.Navigation.ToDetails) {
-                navController.navigateToProjectDetails(navigationEffect.projectId)
+                navController.navigateToProjectDetails(navigationEffect.project)
             }
         }
     )

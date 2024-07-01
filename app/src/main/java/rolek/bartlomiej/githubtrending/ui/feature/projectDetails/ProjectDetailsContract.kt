@@ -1,30 +1,29 @@
-package rolek.bartlomiej.githubtrending.ui.feature.projects
+package rolek.bartlomiej.githubtrending.ui.feature.projectDetails
 
-import androidx.paging.PagingData
-import kotlinx.coroutines.flow.Flow
 import rolek.bartlomiej.githubtrending.model.ProjectItem
 import rolek.bartlomiej.githubtrending.ui.base.ViewEvent
 import rolek.bartlomiej.githubtrending.ui.base.ViewSideEffect
 import rolek.bartlomiej.githubtrending.ui.base.ViewState
 
-class ProjectsContract {
+class ProjectDetailsContract {
 
     sealed class Event : ViewEvent {
         data object Retry : Event()
-        data class ProjectClicked(val project: ProjectItem) : Event()
-        data object LoadMore: Event()
+        data object BackButtonClicked : Event()
+        data object StarProject : Event()
     }
 
     data class State(
-        val projectsPager: Flow<PagingData< ProjectItem>>,
+        val project: ProjectItem?,
         val isLoading: Boolean,
         val isError: Boolean,
+        val isStarred: Boolean,
     ) : ViewState
 
     sealed class Effect : ViewSideEffect {
-        data object DataWasLoaded : Effect()
         sealed class Navigation : Effect() {
-            data class ToDetails(val project: ProjectItem) : Navigation()
+            data object Back : Navigation()
         }
     }
+
 }
